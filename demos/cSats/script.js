@@ -131,13 +131,13 @@ xpl.getTLE('classified', satellites, function(){
 // }, "jsonp");
 
 
-    //navigator.geolocation.getCurrentPosition(function(location){
-        //obs.latitude = location.coords.latitude
-        //obs.longitude = location.coords.longitude
+    navigator.geolocation.getCurrentPosition(function(location){
+        obs.latitude = location.coords.latitude
+        obs.longitude = location.coords.longitude
 
         //NYC
-        obs.latitude = 40.7128;
-        obs.longitude = -74.0059;
+        //obs.latitude = 40.7128;
+        //obs.longitude = -74.0059;
         obs.height = 0
         
         //Jakarta
@@ -166,7 +166,7 @@ xpl.getTLE('classified', satellites, function(){
             animate()
          })
         
-    //}) 
+    }) 
 })
 
 function map (val, in_min, in_max, out_min, out_max) {
