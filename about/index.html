@@ -5,7 +5,7 @@
 		<script>try{Typekit.load({ async: true });}catch(e){}</script>
 	</head>
 	<body class="overflowNotHidden">
-		<ul>
+		<ul id="mainMenu">
 			<h1 class="top-title">explore.js</h1>
 			<li><a href="../">Home</a></li>
 			<li><a href="../demos">Demos</a></li>
@@ -16,10 +16,53 @@
 			<li><a href="../credits">Credits</a></li>
 		</ul>
 		<p class="about">
-			How can we bridge the gap between scientific research and creative coding?<br><br>We can send our selves and our machines into places previously believed to be unreachable. Places from the deepest parts of the ocean to interstellar space are no longer imagined realms of myth but instead have become directly observable and quantifiable. Ironically, at the same time, technology has become an opaque layer between us and these newly reached places. Nowhere is this more evident than in the field of astronomy.
+			How can we bridge the gap between scientific research and creative coding?<br><br>We can send our selves and our machines into places previously believed to be unreachable. Places from the deepest parts of the ocean to interstellar space are no longer imagined realms of myth but instead have become directly observable and quantifiable. Ironically, at the same time, technology has become an opaque layer between us and these newly explored places. Nowhere is this more evident than in the field of astronomy.
 			<br><br>
-			We can discover thousands of planets outside of our solar system but the only direct evidence we have are faint dips in the light levels of their host stars. National space organizations have made amazing progress in opening their research tools to the public. However, much of it is complex and it can still be daunting for someone coming from a creative field to take advantage of these resources.
+			We can discover thousands of planets outside of our solar system but the only direct evidence we have of them are faint dips in the light levels of their host stars. National space organizations have made amazing progress in opening their research tools to the public. However, much of this research is complex and it can still be daunting for someone coming from a creative field to take advantage of these resources.
 			<br><br>
-			explore.js is a modest attempt to bring together the fields of scientific research and creative coding. Through a relatively easy-to-use, well-documented API and dataset developers can easily and quickly create compelling interactive visualizations to tell stories of space exploration.
+			explore.js is a modest attempt to bring together the fields of scientific research and creative coding. Through an easy-to-use and well-documented API, developers can easily and quickly create compelling interactive visualizations to tell stories of space exploration.
 	</body>
+	<script type="text/javascript">
+		function respond(){
+			if(window.innerWidth<780){
+				document.getElementById("mainMenu").style.position = "absolute";
+				document.getElementById("mainMenu").style.width = "92%";
+
+				document.getElementsByClassName("about")[0].style.position = "absolute";
+				document.getElementsByClassName("about")[0].style.top = "700px";
+				document.getElementsByClassName("about")[0].style.left = "0px";
+				document.getElementsByClassName("about")[0].style.width = "90%";
+				document.getElementsByClassName("about")[0].style.padding = "5%";
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+						txt[j].style.padding = "20px";
+						txt[j].style.fontSize = "30px";
+				}
+			}
+			}else{
+				document.getElementById("mainMenu").style.position = "";
+				document.getElementById("mainMenu").style.width = "";
+
+				document.getElementsByClassName("about")[0].style.position = "";
+				document.getElementsByClassName("about")[0].style.left = "";
+				document.getElementsByClassName("about")[0].style.width = "";
+				document.getElementsByClassName("about")[0].style.padding = "";
+				document.getElementsByClassName("about")[0].style.top = "";
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+							txt[j].style.padding = "";
+							txt[j].style.fontSize = "";
+					}
+				}
+			}
+		}
+		respond();
+		window.addEventListener("resize",respond);
+	</script>
 </html>

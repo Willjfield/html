@@ -7,7 +7,7 @@
 	</head>
 	<body style="overflow-y:visible">
 		<script type="text/javascript" src="../script.js"></script>
-		<ul>
+		<ul id="mainMenu">
 			<h1 class="top-title">explore.js</h1>
 			<li><a href="../">Home</a></li>
 			<li><a href="../demos">Demos</a></li>
@@ -164,4 +164,60 @@ var julianDateNow = xpl.jday(now.getFullYear(),now.getMonth(),now.getDay(),now.g
 			</ul>
 		</ul>
 	</body>
+	<script type="text/javascript">
+		function respond(){
+			if(window.innerWidth<780){
+				document.getElementById("mainMenu").style.position = "absolute";
+				document.getElementById("mainMenu").style.width = "92%";
+
+				document.getElementsByClassName("documentationTop")[0].style.position = "absolute";
+				document.getElementsByClassName("documentationTop")[0].style.top = "700px";
+				document.getElementsByClassName("documentationTop")[0].style.left = "0px";
+				document.getElementsByClassName("documentationTop")[0].style.width = "100%";
+				document.getElementsByClassName("documentationTop")[0].style.padding = "0%";
+
+
+				var cats = document.getElementsByClassName("category");
+				for(var cat=0;cat<cats.length;cat++){
+					cats[cat].style.width = "100%";
+					cats[cat].style.padding = "0%";
+				}
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+						txt[j].style.padding = "20px";
+						txt[j].style.fontSize = "30px";
+				}
+			}
+			}else{
+				document.getElementById("mainMenu").style.position = "";
+				document.getElementById("mainMenu").style.width = "";
+
+				document.getElementsByClassName("documentationTop")[0].style.position = "";
+				document.getElementsByClassName("documentationTop")[0].style.left = "";
+				document.getElementsByClassName("documentationTop")[0].style.width = "";
+				document.getElementsByClassName("documentationTop")[0].style.padding = "";
+				document.getElementsByClassName("documentationTop")[0].style.top = "";
+
+				var cats = document.getElementsByClassName("category");
+				for(var cat=0;cat<cats.length;cat++){
+					cats[cat].style.width = "";
+					cats[cat].style.padding = "";
+				}
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+						txt[j].style.padding = "";
+						txt[j].style.fontSize = "";
+					}
+				}
+			}
+		}
+		respond();
+		window.addEventListener("resize",respond);
+	</script>
 </html>

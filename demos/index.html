@@ -7,7 +7,7 @@
 	</head>
 	<body class="overflowNotHidden">
 		<script type="text/javascript" src="../script.js"></script>
-		<ul>
+		<ul id="mainMenu">
 			<h1 class="top-title">explore.js</h1>
 			<li><a href="../">Home</a></li>
 			<li><a href="../demos">Demos</a></li>
@@ -18,8 +18,8 @@
 			<li><a href="../credits">Credits</a></li>
 		</ul>
 		<div id="showPresentation"></div>
-		<table class="demos">
-			<div id="mobileDevice">Sorry, demos currently only work on desktop.</div>
+		<div id="mobileDevice">Sorry, demos currently work only in wider windows</div>
+		<table class="demos">	
 			<tr>
 				<td class="demobox">
 						<img src="thumbs/csats.jpg" class="demothumb">Classified Satellites
@@ -102,6 +102,56 @@
 		document.getElementById("musicThis").addEventListener("click",function(){createBox('./musicalPlanets')})
 		document.getElementById("realThis").addEventListener("click",function(){createBox('./solarSystem')})
 		</script>
+
+		<script type="text/javascript">
+		function respond(){
+			if(window.innerWidth<780){
+				document.getElementById("mobileDevice").style.display = "block"
+				document.getElementsByClassName("demos")[0].style.display = "none"
+
+				document.getElementById("mainMenu").style.position = "absolute";
+				document.getElementById("mainMenu").style.width = "92%";
+
+				document.getElementsByClassName("demos")[0].style.position = "absolute";
+				document.getElementsByClassName("demos")[0].style.top = "700px";
+				document.getElementsByClassName("demos")[0].style.left = "0px";
+				document.getElementsByClassName("demos")[0].style.width = "90%";
+				document.getElementsByClassName("demos")[0].style.padding = "5%";
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+						txt[j].style.padding = "20px";
+						txt[j].style.fontSize = "30px";
+				}
+			}
+			}else{
+				document.getElementById("mobileDevice").style.display = ""
+				document.getElementsByClassName("demos")[0].style.display = ""
+
+				document.getElementById("mainMenu").style.position = "";
+				document.getElementById("mainMenu").style.width = "";
+
+				document.getElementsByClassName("demos")[0].style.position = "";
+				document.getElementsByClassName("demos")[0].style.left = "";
+				document.getElementsByClassName("demos")[0].style.width = "";
+				document.getElementsByClassName("demos")[0].style.padding = "";
+				document.getElementsByClassName("demos")[0].style.top = "";
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+						txt[j].style.padding = "";
+						txt[j].style.fontSize = "";
+					}
+				}
+			}
+		}
+		respond();
+		window.addEventListener("resize",respond);
+	</script>
 	</body>
 
 </html>

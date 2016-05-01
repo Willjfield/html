@@ -5,12 +5,11 @@
 		<script type="text/javascript" src="https://use.typekit.net/pwk6ibv.js"></script>
 		<script type="text/javascript">try{Typekit.load({ async: true });}catch(e){}</script>
 		<!--<script src="https://use.typekit.net/pwk6ibv.js"></script>
-		<script>try{Typekit.load({ async: true });}catch(e){}</script>-->
-		
+		<script>try{Typekit.load({ async: true });}catch(e){}</script>-->	
 	</head>
 	<body>
 		<script type="text/javascript" src="script.js"></script>
-		<ul>
+		<ul id="mainMenu">
 			<h1 class="top-title">explore.js</h1>
 			<li><a href="./">Home</a></li>
 			<li><a href="./demos">Demos</a></li>
@@ -21,12 +20,58 @@
 			<li><a href="/credits">Credits</a></li>
 		</ul>
 		<p class="welcome">
- 		 <iframe src="https://player.vimeo.com/video/162909814?title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+ 		 <iframe id="video" src="https://player.vimeo.com/video/162909814?title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
  		<br><br>
 		explore.js is an open-source toolkit that helps designers, artists, teachers, and amateur astronomers visualize the cosmos.
  		It is composed of a JavaScript library that consolidates various astronomy tools, a texture pack, and scripts to help manage API requests on the back-end.<br><br>
  		If it's your first time here, checkout the <a href='./demos'>demo section</a> to see what the library can do.
  		</p>
-
 	</body>
+	<script type="text/javascript">
+		function respond(){
+			if(window.innerWidth<780){
+				document.getElementById("mainMenu").style.position = "absolute";
+				document.getElementById("mainMenu").style.width = "92%";
+
+				document.getElementById("video").style.width="100%";
+
+				document.getElementsByClassName("welcome")[0].style.position = "absolute";
+				document.getElementsByClassName("welcome")[0].style.top = "700px";
+				document.getElementsByClassName("welcome")[0].style.left = "0px";
+				document.getElementsByClassName("welcome")[0].style.width = "90%";
+				document.getElementsByClassName("welcome")[0].style.padding = "5%";
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+						txt[j].style.padding = "20px";
+						txt[j].style.fontSize = "30px";
+				}
+			}
+			}else{
+				document.getElementById("mainMenu").style.position = "";
+				document.getElementById("mainMenu").style.width = "";
+
+				document.getElementById("video").style.width="";
+
+				document.getElementsByClassName("welcome")[0].style.position = "";
+				document.getElementsByClassName("welcome")[0].style.left = "";
+				document.getElementsByClassName("welcome")[0].style.width = "";
+				document.getElementsByClassName("welcome")[0].style.padding = "";
+				document.getElementsByClassName("welcome")[0].style.top = "";
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+						txt[j].style.padding = "";
+						txt[j].style.fontSize = "";
+					}
+				}
+			}
+		}
+		respond();
+		window.addEventListener("resize",respond);
+	</script>
 </html>
