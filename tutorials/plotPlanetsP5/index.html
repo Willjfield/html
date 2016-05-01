@@ -8,7 +8,7 @@
 	</head>
 	<body style="overflow:visible;">
 		<script type="text/javascript" src="../../script.js"></script>
-		<ul>
+		<ul id="mainMenu">
 			<h1 class="top-title">explore.js</h1>
 			<li><a href="../../">Home</a></li>
 			<li><a href="../../download">Download</a></li>
@@ -249,4 +249,47 @@ document.getElementById("resetTime").addEventListener("click",function(event){
 
 		</p>
 	</body>
+	<script type="text/javascript">
+		function respond(){
+			if(window.innerWidth<780){
+				document.getElementById("mainMenu").style.position = "absolute";
+				document.getElementById("mainMenu").style.width = "92%";
+
+				document.getElementsByClassName("tutContent")[0].style.position = "absolute";
+				document.getElementsByClassName("tutContent")[0].style.top = "700px";
+				document.getElementsByClassName("tutContent")[0].style.width = "90%";
+				document.getElementsByClassName("tutContent")[0].style.padding = "5%";
+				document.getElementsByClassName("tutContent")[0].style.left = "0px";
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+						txt[j].style.padding = "20px";
+						txt[j].style.fontSize = "30px";
+				}
+			}
+			}else{
+				document.getElementById("mainMenu").style.position = "";
+				document.getElementById("mainMenu").style.width = "";
+
+				document.getElementsByClassName("tutContent")[0].style.position = "";
+				document.getElementsByClassName("tutContent")[0].style.top = "";
+				document.getElementsByClassName("tutContent")[0].style.width = "";
+				document.getElementsByClassName("tutContent")[0].style.padding = "";
+				document.getElementsByClassName("tutContent")[0].style.left = "";
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+						txt[j].style.padding = "";
+						txt[j].style.fontSize = "";
+					}
+				}
+			}
+		}
+		respond();
+		window.addEventListener("resize",respond);
+	</script>
 </html>

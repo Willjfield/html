@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<script type="text/javascript" src="../script.js"></script>
-		<ul>
+		<ul id="mainMenu">
 			<h1 class="top-title">explore.js</h1>
 			<li><a href="../">Home</a></li>
 			<li><a href="../demos">Demos</a></li>
@@ -26,4 +26,67 @@
 		</div>
 		
 	</body>
+	<script type="text/javascript">
+		function respond(){
+			if(window.innerWidth<780){
+				document.getElementById("mainMenu").style.position = "absolute";
+				document.getElementById("mainMenu").style.width = "92%";
+
+				document.getElementsByClassName("downloadBtnContainer")[0].style.position = "absolute";
+				document.getElementsByClassName("downloadBtnContainer")[0].style.top = "700px";
+				document.getElementsByClassName("downloadBtnContainer")[0].style.left = "0px";
+				document.getElementsByClassName("downloadBtnContainer")[0].style.width = "90%";
+				document.getElementsByClassName("downloadBtnContainer")[0].style.padding = "5%";
+
+				var buttons = document.getElementsByClassName("downloadBtn");
+				for(var b=0;b<buttons.length;b++){
+					buttons[b].style.width="80%";
+				}
+
+				var descriptions = document.getElementsByClassName("category");
+				for(var c=0;c<descriptions.length;c++){
+					descriptions[c].style.width="80%";
+				}
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+						txt[j].style.padding = "20px";
+						txt[j].style.fontSize = "30px";
+				}
+			}
+			}else{
+				document.getElementById("mainMenu").style.position = "";
+				document.getElementById("mainMenu").style.width = "";
+
+				document.getElementsByClassName("downloadBtnContainer")[0].style.position = "";
+				document.getElementsByClassName("downloadBtnContainer")[0].style.left = "";
+				document.getElementsByClassName("downloadBtnContainer")[0].style.width = "";
+				document.getElementsByClassName("downloadBtnContainer")[0].style.padding = "";
+				document.getElementsByClassName("downloadBtnContainer")[0].style.top = "";
+
+				var buttons = document.getElementsByClassName("downloadBtn");
+				for(var b=0;b<buttons.length;b++){
+					buttons[b].style.width="";
+				}
+
+				var descriptions = document.getElementsByClassName("category");
+				for(var c=0;c<descriptions.length;c++){
+					descriptions[c].style.width="";
+				}
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+						txt[j].style.padding = "";
+						txt[j].style.fontSize = "";
+					}
+				}
+			}
+		}
+		respond();
+		window.addEventListener("resize",respond);
+	</script>
 </html>

@@ -4,7 +4,7 @@ body{
 	overflow-x: hidden;
 }
 
-ul {
+#mainMenu {
 	z-index: 999;
 	position: fixed;
 	top:0px;
@@ -409,12 +409,13 @@ iframe{
 
 #mobileDevice{
 	position: absolute;
-	padding:10px;
+	padding:100px;
+	width:100%;
 	color:white;
 	z-index: 999;
-	top:50%;
+	bottom:0%;
 	left:50%;
-	transform: translate(-50%,-50%);
+	transform: translate(-50%,50%);
 	display:none;
 	background:black;
 	border:1px solid white;
