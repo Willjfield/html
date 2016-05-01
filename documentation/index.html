@@ -165,8 +165,12 @@ var julianDateNow = xpl.jday(now.getFullYear(),now.getMonth(),now.getDay(),now.g
 		</ul>
 	</body>
 	<script type="text/javascript">
+		var isMobile = false;
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				isMobile = true
+			}
 		function respond(){
-			if(window.innerWidth<780){
+			if(window.innerWidth<780 || isMobile){
 				document.getElementById("mainMenu").style.position = "absolute";
 				document.getElementById("mainMenu").style.width = "92%";
 
