@@ -23,8 +23,12 @@
 			explore.js is a modest attempt to bring together the fields of scientific research and creative coding. Through an easy-to-use and well-documented API, developers can easily and quickly create compelling interactive visualizations to tell stories of space exploration.
 	</body>
 	<script type="text/javascript">
+		var isMobile = false;
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				isMobile = true
+			}
 		function respond(){
-			if(window.innerWidth<780){
+			if(window.innerWidth<780 || isMobile){
 				document.getElementById("mainMenu").style.position = "absolute";
 				document.getElementById("mainMenu").style.width = "92%";
 
