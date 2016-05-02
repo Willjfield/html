@@ -37,6 +37,7 @@ var showLines = false
 var nightWarning = false
 
 function init() {
+	respond();
 	//console.log('sunrise '+xpl.sunrise(obsPos,-0.833))
 	speed = 0
 	timeOffset = 0
@@ -496,6 +497,11 @@ document.getElementById("close").addEventListener("click",function(){
 	document.getElementById("intro").style.visibility = 'hidden'
 	nightWarning = true
 	document.getElementById("moreInfo").style.visibility = 'visible'
+	document.getElementById("controls").style.visibility = "visible";
+	document.getElementById("date").style.visibility = "visible";
+	document.getElementById("setDate").style.visibility = "visible";
+	document.getElementById("submitDate").style.visibility = "visible";
+	document.getElementById("intro").style.bottom = "";
 	if(sphereCut){scene.remove(sphereCut)}
 	controls.autoRotate = false
 	create = true
@@ -508,7 +514,8 @@ document.getElementById("takeTour").addEventListener("click",function(){
 	document.getElementById("intro").style.visibility = 'visible'
 	document.getElementById("credit").style.visibility = "hidden"
 	document.getElementById("timeExplanation").style.visibility = "hidden"
-	document.getElementById("info").style.visibility = "hidden"	
+	document.getElementById("info").style.visibility = "hidden";
+	document.getElementById("moreInfo").style.visibility="hidden";	
 	nightWarning = false
 })
 
@@ -517,7 +524,20 @@ document.getElementsByTagName('canvas')[0].addEventListener("click",function(){
 		document.getElementById("intro").style.visibility = 'hidden'
 		document.getElementById("credit").style.visibility = "hidden"
 		document.getElementById("timeExplanation").style.visibility = "hidden"
-		document.getElementById("info").style.visibility = "hidden"	
+		var exp = document.getElementsByClassName("timeExplanationCl")
+		for(var x=0;x<exp.length;x++){
+			exp[x].style.visibility = "hidden"
+		}
+		document.getElementById("info").style.visibility = "hidden"
+		document.getElementById("controls").style.visibility = "visible";
+		document.getElementById("date").style.visibility = "visible";
+		document.getElementById("setDate").style.visibility = "visible";
+		document.getElementById("submitDate").style.visibility = "visible";
+		document.getElementById("intro").style.bottom = "";	
+		document.getElementById("moreInfo").style.visibility = 'visible'
+		tutStage = 0
+		controls.autoRotate = false
+		if(sphereCut){scene.remove(sphereCut)}
 	}	
 })
 
@@ -538,6 +558,7 @@ function tutorial(){
 	switch(tutStage){
 		case 0:
 			if(create){
+
 				document.getElementById("infoText").innerHTML = "<p id='infoText'><a href='http://www.ancient-astronomy.org/en/2013/05/03/antike-sonnenuhren/'>The Berlin Sundial Project </a>has 3D scanned and archived dozens of sundials from ancient Greece and Rome. The sundial presented here was found in the Villa Palombra in Rome and dates to the first century BCE. <br><br>Use the mouse to navigate through the scene.<br><br>Spin the time dial to change the time and date or enter a date in the text box.<br><br></p>"
 				create=false
 			}
@@ -546,6 +567,14 @@ function tutorial(){
 		case 1:
 			if((xpl.now+sumT+timeOffset+(timeZone/12))%1>.02){timeOffset+=.01}
 			if(create){
+				document.getElementById("controls").style.visibility = "hidden";
+				document.getElementById("date").style.visibility = "hidden";
+				document.getElementById("setDate").style.visibility = "hidden";
+				document.getElementById("submitDate").style.visibility = "hidden";
+
+				document.getElementById("intro").style.bottom = "0px";
+				document.getElementById("intro").style.transform = "";
+				//document.getElementById("infoText").style.bottom = "0px";
 				controls.autoRotate = true
 				document.getElementById("infoText").innerHTML = "This sundial was made by cutting a spherical shape out of stone."
 				document.getElementById("next").innerHTML = "Next"
@@ -646,8 +675,13 @@ function tutorial(){
 
 		case 5:
 			if(create){
-				document.getElementById("intro").style.visibility = 'hidden'
-				document.getElementById("moreInfo").style.visibility = 'visible'
+				document.getElementById("intro").style.visibility = 'hidden';
+				document.getElementById("intro").style.bottom = "";
+				document.getElementById("moreInfo").style.visibility = 'visible';
+				document.getElementById("controls").style.visibility = "visible";
+				document.getElementById("date").style.visibility = "visible";
+				document.getElementById("setDate").style.visibility = "visible";
+				document.getElementById("submitDate").style.visibility = "visible";
 				controls.autoRotate = false
 			}
 		break
@@ -657,6 +691,113 @@ function tutorial(){
 // document.body.addEventListener("keypress",function(){
 // 	lineMaterial.opacity*=-1time
 // })
+var isMobile = false;
+
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+	isMobile = true
+}
+
+function respond(){
+	if(window.innerWidth<780 || isMobile){
+		console.log("small")
+
+		document.getElementById("date").style.fontSize = "15px";
+		document.getElementById("date").style.height = "135px";
+		
+		document.getElementById("setDate").style.width="150px";
+		document.getElementById("setDate").style.height="20px";
+		document.getElementById("setDate").style.fontSize="12px";
+		document.getElementById("setDate").style.bottom="50px";
+
+		document.getElementById("submitDate").style.bottom = "1px";
+		document.getElementById("submitDate").style.width = "160px";
+		document.getElementById("submitDate").style.height = "30px";
+		document.getElementById("submitDate").style.fontSize = "10px";
+		document.getElementById("submitDate").style.left = "2.5px";
+
+		document.getElementById("demo").style.left="100%";
+		document.getElementById("demo").style.transform = "translate(-150%,0%)"
+
+		document.getElementsByClassName("time")[0].style.left="25%";
+
+		document.getElementsByClassName("arrows")[0].style.left="100%";
+		document.getElementsByClassName("arrows")[0].style.transform = "translate(-112%,0%)";
+		document.getElementsByClassName("time")[0].style.bottom="";
+		document.getElementsByClassName("time")[0].style.fontSize="";
+
+		document.getElementById("nightTime").style.top="0px";
+
+		var exp = document.getElementsByClassName("timeExplanationCl");
+		for(var x=0;x<exp.length;x++){
+			exp[x].style.fontSize="16px"
+			exp[x].style.width="100%";
+			exp[x].style.transform=""
+		}
+
+		document.getElementById("intro").style.width = "100%";
+		document.getElementById("intro").style.fontSize = "12px";
+		document.getElementById("intro").style.height = "";
+		if(tutStage==0){
+				document.getElementById("intro").style.transform = "translate(-50%,60%)"
+		}
+		//document.getElementById("infoText
+		if(window.orientation==0 || window.innerHeight>window.innerWidth){
+			console.log("portrait")
+
+			document.getElementById("intro").style.transform = ""
+			document.getElementById("demo").style.left="100%";
+			document.getElementById("demo").style.transform = "translate(-120%,-10%)";
+
+			document.getElementsByClassName("time")[0].style.left="25%";
+			document.getElementsByClassName("time")[0].style.bottom="0px";
+			document.getElementsByClassName("time")[0].style.fontSize="10px";
+
+			document.getElementsByClassName("arrows")[0].style.visibility="hidden";
+
+			document.getElementById("nightTime").style.top="";
+		}
+	}else{
+		console.log("big")
+
+		document.getElementsByClassName("arrows")[0].style.visibility="";
+		document.getElementById("date").style.fontSize = "";
+		document.getElementById("date").style.height = "";
+		
+		document.getElementById("setDate").style.width="";
+		document.getElementById("setDate").style.height="";
+		document.getElementById("setDate").style.fontSize="";
+		document.getElementById("setDate").style.bottom="";
+
+		document.getElementById("submitDate").style.bottom = "";
+		document.getElementById("submitDate").style.width = "";
+		document.getElementById("submitDate").style.height = "";
+		document.getElementById("submitDate").style.fontSize = "";
+		document.getElementById("submitDate").style.left = "";
+
+		document.getElementById("demo").style.left="";
+		document.getElementById("demo").style.transform = ""
+
+		document.getElementsByClassName("time")[0].style.left="";
+
+		document.getElementsByClassName("arrows")[0].style.left="";
+		document.getElementsByClassName("arrows")[0].style.transform = "";
+
+		document.getElementById("nightTime").style.top="";
+		var exp = document.getElementsByClassName("timeExplanationCl");
+		for(var x=0;x<exp.length;x++){
+			exp[x].style.fontSize=""
+			exp[x].style.width="";
+			exp[x].style.transform=""
+		}
+
+		// if(document.getElementById("infoText")){
+		// 	document.getElementById("infoText").style
+		// }
+	}
+}
+window.addEventListener("resize",respond);
+window.addEventListener("orientationchange",respond, false);
+
 document.getElementById("timeRight").addEventListener("click",function(){
 	document.getElementById("timeExplanation").style.visibility = "visible"
 	document.getElementById("intro").style.visibility = "hidden"
