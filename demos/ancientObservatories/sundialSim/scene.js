@@ -36,6 +36,18 @@ var showLines = false
 
 var nightWarning = false
 
+var isMobile = false;
+function testMobile(){
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)||window.innerWidth<780 ) {
+		isMobile = true;
+		console.log('mobile');
+	}else{
+		isMobile = false;
+	}
+}
+testMobile();
+
+
 function init() {
 	respond();
 	//console.log('sunrise '+xpl.sunrise(obsPos,-0.833))
@@ -206,16 +218,27 @@ function init() {
 
 	var manager = new THREE.LoadingManager();
 	manager.onProgress = function ( item, loaded, total ) {
-		document.getElementById("loading").remove()
-		document.getElementById("loadAmount").remove()
-		document.getElementById("intro").style.visibility='visible'
+		if(document.getElementById("loading")){
+			document.getElementById("loading").remove()
+		}
+		
+		if(document.getElementById("loadAmount")){
+			document.getElementById("loadAmount").remove()
+		}
+		if(document.getElementById("intro")){
+			document.getElementById("intro").style.visibility='visible'
+		}
+		
 		console.log( item, loaded, total );
 	};
 
 	var onProgress = function ( xhr ) {
 		if ( xhr.lengthComputable ) {
 			var percentComplete = xhr.loaded / xhr.total * 100;
-			document.getElementById("loadAmount").innerHTML = (Math.round(percentComplete, 2) + '%')
+			if(document.getElementById("loadAmount")){
+				document.getElementById("loadAmount").innerHTML = (Math.round(percentComplete, 2) + '%')
+			}
+			
 		}
 	};
 
@@ -499,8 +522,11 @@ document.getElementById("close").addEventListener("click",function(){
 	document.getElementById("moreInfo").style.visibility = 'visible'
 	document.getElementById("controls").style.visibility = "visible";
 	document.getElementById("date").style.visibility = "visible";
-	document.getElementById("setDate").style.visibility = "visible";
-	document.getElementById("submitDate").style.visibility = "visible";
+	if(!isMobile){
+		document.getElementById("setDate").style.visibility = "visible";
+		document.getElementById("submitDate").style.visibility = "visible";
+	}
+	
 	document.getElementById("intro").style.bottom = "";
 	if(sphereCut){scene.remove(sphereCut)}
 	controls.autoRotate = false
@@ -520,6 +546,26 @@ document.getElementById("takeTour").addEventListener("click",function(){
 })
 
 document.getElementsByTagName('canvas')[0].addEventListener("click",function(){
+	if(!isMobile){	
+		document.getElementById("moreInfo").style.top = "-35px";
+		document.getElementById("moreInfo").style.left = "0px";
+		document.getElementById("moreInfo").style.bottom = "";
+		document.getElementById("moreInfo").style.right = "";
+		document.getElementById("moreInfo").style.padding = "";
+	}else{
+		document.getElementById("moreInfo").height="";
+		document.getElementById("moreInfo").top="";
+		document.getElementById("moreInfo").style.width="";
+		document.getElementById("moreInfo").style.paddingTop=""
+		document.getElementById("moreInfo").style.paddingBottom=""
+		document.getElementById("moreInfo").style.transform = ""
+		document.getElementById("moreInfo").style.top=""
+		document.getElementById("moreInfo").style.left=""
+		document.getElementById("moreInfo").style.bottom = "0px";
+		document.getElementById("moreInfo").style.right = "0px";
+		document.getElementById("moreInfo").style.padding = "0px";
+	}
+	
 	if(tutStage>0){
 		document.getElementById("intro").style.visibility = 'hidden'
 		document.getElementById("credit").style.visibility = "hidden"
@@ -531,8 +577,10 @@ document.getElementsByTagName('canvas')[0].addEventListener("click",function(){
 		document.getElementById("info").style.visibility = "hidden"
 		document.getElementById("controls").style.visibility = "visible";
 		document.getElementById("date").style.visibility = "visible";
-		document.getElementById("setDate").style.visibility = "visible";
-		document.getElementById("submitDate").style.visibility = "visible";
+		if(!isMobile){
+			document.getElementById("setDate").style.visibility = "visible";
+			document.getElementById("submitDate").style.visibility = "visible";
+		}
 		document.getElementById("intro").style.bottom = "";	
 		document.getElementById("moreInfo").style.visibility = 'visible'
 		tutStage = 0
@@ -548,6 +596,10 @@ var logValue = function(e){
 var create = true
 var sphereCut, globeMesh, earthPlaneMesh
 var upOp = true
+
+	//var moreInfoHover = document.createElement('style');
+    //moreInfoHover.type = 'text/css';
+    //moreInfoHover.innerHTML="#moreInfo:hover{font-size: 22px;background:rgba(0,0,0,.8);border:2px solid white;height:150px;width:200px;top:-168px;transition: all .5s ease-in-out;}"
 
 document.getElementById("next").addEventListener("click",function(){
 					++tutStage
@@ -680,8 +732,10 @@ function tutorial(){
 				document.getElementById("moreInfo").style.visibility = 'visible';
 				document.getElementById("controls").style.visibility = "visible";
 				document.getElementById("date").style.visibility = "visible";
-				document.getElementById("setDate").style.visibility = "visible";
-				document.getElementById("submitDate").style.visibility = "visible";
+				if(!isMobile){
+					document.getElementById("setDate").style.visibility = "visible";
+					document.getElementById("submitDate").style.visibility = "visible";
+				}
 				controls.autoRotate = false
 			}
 		break
@@ -691,37 +745,65 @@ function tutorial(){
 // document.body.addEventListener("keypress",function(){
 // 	lineMaterial.opacity*=-1time
 // })
-var isMobile = false;
-
-if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-	isMobile = true
-}
+document.getElementById("moreInfo").addEventListener('click',function(){
+	if(isMobile){
+		document.getElementById("moreInfo").height="250px";
+		document.getElementById("moreInfo").top="-150px";
+		document.getElementById("moreInfo").style.width="100%";
+		document.getElementById("moreInfo").style.paddingTop="5px"
+		document.getElementById("moreInfo").style.paddingBottom="100px"
+		document.getElementById("moreInfo").style.transform = "translate(0%,-50%)"
+	}
+	//font-size: 22px;background:rgba(0,0,0,.8);border:2px solid white;height:150px;width:200px;top:-168px;
+})
 
 function respond(){
+	testMobile();
 	if(window.innerWidth<780 || isMobile){
 		console.log("small")
+		document.getElementById("controls").style.background="transparent";
+		
+		var styleSheet = document.styleSheets[0];
+
+		if(styleSheet.cssRules[0].selectorText=="#moreInfo:hover"){
+			console.log("should remove hover")
+			//if(styleSheet.cssRules){
+	            styleSheet.deleteRule(0);
+	        // } else {
+         //     styleSheet.removeRule(0);
+         //   }
+		}
+		document.getElementById("moreInfo").style.top=""
+		document.getElementById("moreInfo").style.left=""
+		document.getElementById("moreInfo").style.bottom = "0px";
+		document.getElementById("moreInfo").style.right = "0px";
+		document.getElementById("moreInfo").style.padding = "0px";
 
 		document.getElementById("date").style.fontSize = "15px";
-		document.getElementById("date").style.height = "135px";
+		document.getElementById("date").style.height = "50px";
 		
-		document.getElementById("setDate").style.width="150px";
-		document.getElementById("setDate").style.height="20px";
-		document.getElementById("setDate").style.fontSize="12px";
-		document.getElementById("setDate").style.bottom="50px";
+		// document.getElementById("setDate").style.width="150px";
+		// document.getElementById("setDate").style.height="20px";
+		// document.getElementById("setDate").style.fontSize="12px";
+		// document.getElementById("setDate").style.bottom="50px";
 
-		document.getElementById("submitDate").style.bottom = "1px";
-		document.getElementById("submitDate").style.width = "160px";
-		document.getElementById("submitDate").style.height = "30px";
-		document.getElementById("submitDate").style.fontSize = "10px";
-		document.getElementById("submitDate").style.left = "2.5px";
+		// document.getElementById("submitDate").style.bottom = "1px";
+		// document.getElementById("submitDate").style.width = "160px";
+		// document.getElementById("submitDate").style.height = "30px";
+		// document.getElementById("submitDate").style.fontSize = "10px";
+		// document.getElementById("submitDate").style.left = "2.5px";
+		document.getElementById("submitDate").style.visibility="hidden";
+		document.getElementById("demo").style.visibility="hidden";
+		document.getElementById("setDate").style.visibility="hidden";
+		// document.getElementById("demo").style.left="100%";
+		// document.getElementById("demo").style.transform = "translate(-150%,0%)";
+		
 
-		document.getElementById("demo").style.left="100%";
-		document.getElementById("demo").style.transform = "translate(-150%,0%)"
-
-		document.getElementsByClassName("time")[0].style.left="25%";
-
-		document.getElementsByClassName("arrows")[0].style.left="100%";
-		document.getElementsByClassName("arrows")[0].style.transform = "translate(-112%,0%)";
+		//document.getElementsByClassName("time")[0].style.left="25%";
+		document.getElementsByClassName("time")[0].style.visibility="hidden";
+		document.getElementsByClassName("arrows")[0].style.visibility = "hidden";
+		//document.getElementsByClassName("arrows")[0].style.left="100%";
+		//document.getElementsByClassName("arrows")[0].style.transform = "translate(-112%,0%)";
 		document.getElementsByClassName("time")[0].style.bottom="";
 		document.getElementsByClassName("time")[0].style.fontSize="";
 
@@ -752,13 +834,31 @@ function respond(){
 			document.getElementsByClassName("time")[0].style.bottom="0px";
 			document.getElementsByClassName("time")[0].style.fontSize="10px";
 
-			document.getElementsByClassName("arrows")[0].style.visibility="hidden";
+			//document.getElementsByClassName("arrows")[0].style.visibility="hidden";
 
 			document.getElementById("nightTime").style.top="";
 		}
 	}else{
 		console.log("big")
+		document.getElementById("submitDate").style.visibility="visible";
+		document.getElementById("demo").style.visibility="visible";
+		document.getElementById("setDate").style.visibility="visible";
+		document.getElementsByClassName("time")[0].style.visibility="visible";
+		document.getElementsByClassName("arrows")[0].style.visibility = "visible";
+		document.getElementsByClassName("time")[0].style.left="";
+			document.getElementsByClassName("time")[0].style.bottom="";
+			document.getElementsByClassName("time")[0].style.fontSize="";
 
+		document.getElementById("moreInfo").style.top = "-35px";
+		document.getElementById("moreInfo").style.left = "0px";
+		document.getElementById("moreInfo").style.bottom = "";
+		document.getElementById("moreInfo").style.right = "";
+		document.getElementById("moreInfo").style.padding = "";
+		//document.getElementById("moreInfo").appendChild(moreInfoHover);
+		if(document.styleSheets[0].cssRules[0].selectorText!="#moreInfo:hover"){
+			document.styleSheets[0].insertRule("#moreInfo:hover{font-size: 22px;background:rgba(0,0,0,.8);border:2px solid white;height:150px;width:200px;top:-168px;transition: all .5s ease-in-out;transform:translate(0px,-130px)}", 0);
+		}
+		
 		document.getElementsByClassName("arrows")[0].style.visibility="";
 		document.getElementById("date").style.fontSize = "";
 		document.getElementById("date").style.height = "";

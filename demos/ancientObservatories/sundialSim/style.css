@@ -96,11 +96,10 @@
   visibility: hidden;
   cursor: pointer;
   position: absolute;
-  top:-35px;
+  
   padding: 5px;
   padding-left: 50px;
   padding-right: 50px;
-  left:0px;
   height:20px;
   width:150px;
   font-family: monospace;
@@ -111,15 +110,7 @@
    text-overflow: clip;
 }
 
-#moreInfo:hover{
-  font-size: 22px;
-  background:rgba(0,0,0,.8);
-  border:2px solid white;
-  height:150px;
-  width:200px;
-  top:-168px;
-  transition: all .5s ease-in-out;
-}
+
 
 #nightTime{
   z-index: 999;
