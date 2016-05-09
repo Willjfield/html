@@ -194,6 +194,12 @@ input[type="checkbox"]{
   top:38px;
 }
 
+#shwprobes{
+  position: absolute;
+  right:10px;
+  top:65px;
+}
+
 #movewcam{
   position: absolute;
   right:10px;

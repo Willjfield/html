@@ -428,6 +428,7 @@ xpl.probePositions('voyager1',voyager1Positions,function(){
 		color: 0x00ff00});
 	var line = new THREE.Line(probeGeometry,probeMaterial );
 	line.geometry.verticesNeedUpdate = true
+	line.name="voyager1";
 	scene.add(line)
 
 	var v = voyager1Positions.length-1
@@ -476,6 +477,7 @@ xpl.probePositions('voyager2',voyager2Positions,function(){
 		color: 0xffff00});
 	var line = new THREE.Line(probeGeometry,probeMaterial );
 	line.geometry.verticesNeedUpdate = true
+	line.name="voyager2";
 	scene.add(line)
 	var v = voyager2Positions.length-1
 	curV2Position = new THREE.Vector3( -voyager2Positions[v].x, voyager2Positions[v].y, voyager2Positions[v].z )
@@ -521,6 +523,7 @@ xpl.probePositions('dawn',dawnPositions,function(){
 		color: 0xff0000});
 	var line = new THREE.Line(probeGeometry,probeMaterial );
 	line.geometry.verticesNeedUpdate = true
+	line.name="dawn";
 	scene.add(line)
 
 	var v = dawnPositions.length-1
@@ -602,7 +605,18 @@ YUI().use('dial', function(Y) {
 			dial.set('value',0)
 		}, false)
 });
-
+document.getElementById("showProbes").addEventListener("change",function(){
+	if(document.getElementById("showProbes").checked){
+		scene.getObjectByName( "dawn" ).visible = true;
+		scene.getObjectByName( "voyager1" ).visible = true;
+		scene.getObjectByName( "voyager2" ).visible = true;
+	}
+		else{
+			scene.getObjectByName( "dawn" ).visible = false;
+		scene.getObjectByName( "voyager1" ).visible = false;
+		scene.getObjectByName( "voyager2" ).visible = false;
+		}
+	});
 document.getElementById("showLabels").addEventListener("change",function(){
 	if(document.getElementById("showLabels").checked){
 		scene.getObjectByName("Sun_parent_label",true).visible = true
