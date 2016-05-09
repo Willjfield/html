@@ -112,7 +112,7 @@ var sunTexture = new THREE.Texture();
 	var material = new THREE.MeshLambertMaterial( { map:image } );
 	var sphere = new THREE.Mesh( sunGeometry, sunMaterial );
 	scene.add( sphere );
-	SunLabel = new ThreeLabel({labelText:"Sun",width:4,labelScale:1,parentScale:.01})
+	SunLabel = new ThreeLabel({labelText:"Sun",width:4,labelScale:1,lineheight:10,parentScale:.005})
 })
 var planetLabels=new Array(xpl.planets.length)
 function makePlanets(){
@@ -124,7 +124,7 @@ function makePlanets(){
 			var curPosition = xpl.SolarSystem(xpl.planets[p],xpl.now);
 			sphere.position.set(-curPosition[0]*solScale,curPosition[2]*solScale,curPosition[1]*solScale);
 			sphere.name = xpl.planets[p].name
-			planetLabels[p] = new ThreeLabel({labelText:xpl.planets[p].name,width:4,labelScale:1,parentScale:.01, parent:sphere})
+			planetLabels[p] = new ThreeLabel({labelText:xpl.planets[p].name,width:4,labelScale:1,parentScale:.005, parent:sphere})
 
 			drawPlanets.push(sphere);
 
