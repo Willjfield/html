@@ -89,6 +89,7 @@ var loader = new THREE.ImageLoader( manager );
 var mwGeo = new THREE.SphereGeometry(.01,48,48)
 var mwMat = new THREE.MeshBasicMaterial({color:0x888888, side:THREE.DoubleSide, depthTest: false})
 var mwMesh = new THREE.Mesh(mwGeo,mwMat)
+mwMesh.name = "milkyway"
 
 loader.load("../../lib/data/images/milkywaypan_brunier.jpg",function (image){
     var texture = new THREE.Texture()
