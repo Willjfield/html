@@ -90,7 +90,7 @@ li a:hover {
 .aboutDemos{
 	position: absolute;
 	padding: 50px;
-	top: 5%;
+	top: 0%;
 	left: 220px;
 	margin: 0 auto;
 	width:100%;
@@ -118,6 +118,14 @@ li a:hover {
 
 .learnMore a:hover{
 	color:grey;
+}
+
+.back:hover{
+	color:grey;
+}
+
+.back {
+	color:white;
 }
 
 .tutContent{
