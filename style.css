@@ -78,11 +78,46 @@ li a:hover {
 	width:60%;
 	height: 100%;
 	background: rgba(0,0,0,.4);
-	font-family: "futura-pt",sans-serif;
 	color:white;
 	text-align: left;
 	font-family: "futura-pt",sans-serif;
 	font-size: 24px;
+}
+.aboutImg{
+	width:75%;
+}
+
+.aboutDemos{
+	position: absolute;
+	padding: 50px;
+	top: 5%;
+	left: 220px;
+	margin: 0 auto;
+	width:100%;
+	height: 100%;
+	background: transparent;
+	color:white;
+	text-align: left;
+	font-family: "futura-pt",sans-serif;
+	font-size: 24px;
+}
+
+.learnMore{
+	position: absolute;
+	width: 500px;
+	left:50%;
+	transform:translate(-50%,-20px);
+	top:10%;
+    font-family: "futura-pt",sans-serif;
+    background: rgba(0,0,0,0);
+}
+
+.learnMore a{
+	color:white;
+}
+
+.learnMore a:hover{
+	color:grey;
 }
 
 .tutContent{

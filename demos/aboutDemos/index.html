@@ -1,0 +1,74 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../../style.css">
+		<script type="text/javascript" src="https://use.typekit.net/pwk6ibv.js"></script>
+		<script>try{Typekit.load({ async: true });}catch(e){}</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script>
+	</head>
+	<body class="overflowNotHidden; overflow-x:hidden;">
+		<script type="text/javascript" src="../../script.js"></script>
+		<ul id="mainMenu">
+			<h1 class="top-title">explore.js</h1>
+			<li><a href="../..">Home</a></li>
+			<li><a href="../../demos">Demos</a></li>
+			<li><a href="../../download">Download</a></li>
+			<li><a href="../../documentation">Documentation</a></li>
+			<li><a href="../../tutorials">Tutorials</a></li>
+			<li><a href="../../about">About</a></li>
+			<li><a href="../../credits">Credits</a></li>
+		</ul>
+			<p class="aboutDemos">
+				<a href="img/csats.jpg"><img class="aboutImg" src="img/csats.jpg"></a><br><br><br><br>
+				<a href="img/fullsolarsytem.jpg"><img class="aboutImg" src="img/fullsolarsytem.jpg"></a><br><br><br><br>
+				<a href="img/musicalplanets.jpg"><img class="aboutImg" src="img/musicalplanets.jpg"></a><br><br><br><br>
+				<a href="img/sundials.jpg"><img class="aboutImg" src="img/sundials.jpg"></a>
+			</p>
+	</body>
+	<script type="text/javascript">
+		var isMobile = false;
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				isMobile = true
+			}
+		function respond(){
+			if(window.innerWidth<780 || isMobile){
+				document.getElementById("mainMenu").style.position = "absolute";
+				document.getElementById("mainMenu").style.width = "92%";
+
+				document.getElementsByClassName("aboutDemos")[0].style.position = "absolute";
+				document.getElementsByClassName("aboutDemos")[0].style.top = "700px";
+				document.getElementsByClassName("aboutDemos")[0].style.left = "0px";
+				document.getElementsByClassName("aboutDemos")[0].style.width = "100%";
+				//document.getElementsByClassName("aboutDemos")[0].style.padding = "5%";
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+						txt[j].style.padding = "20px";
+						txt[j].style.fontSize = "30px";
+				}
+			}
+			}else{
+				document.getElementById("mainMenu").style.position = "";
+				document.getElementById("mainMenu").style.width = "";
+
+				document.getElementsByClassName("aboutDemos")[0].style.position = "";
+				document.getElementsByClassName("aboutDemos")[0].style.left = "";
+				document.getElementsByClassName("aboutDemos")[0].style.width = "";
+				document.getElementsByClassName("aboutDemos")[0].style.padding = "";
+				document.getElementsByClassName("aboutDemos")[0].style.top = "";
+
+				var lis = document.getElementsByTagName("LI");
+				for(var item=0;item<lis.length;item++){
+					var txt = document.getElementsByTagName("A");
+					for(var j=0;j<txt.length;j++){
+							txt[j].style.padding = "";
+							txt[j].style.fontSize = "";
+					}
+				}
+			}
+		}
+		respond();
+		window.addEventListener("resize",respond);
+	</script>
+</html>

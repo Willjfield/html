@@ -68,8 +68,8 @@ xpl.getTLE('classified',satellites,function(){
         obs.height = 0;
         
         //Jakarta
-        // obs.latitude = -6.1745
-        // obs.longitude = 106.8227
+        //obs.latitude = -6.1745
+        //obs.longitude = 106.8227
         var manager = new THREE.LoadingManager();
                 manager.onProgress = function ( item, loaded, total ) {
                     document.getElementById("loading").remove();
@@ -239,10 +239,13 @@ function animate(time) {
     myThreePosition = new THREE.Vector3(myposition.x*0.0156,myposition.z*0.0156,myposition.y*-0.0156);
     myViewPosition=new THREE.Vector3();
     myViewPosition.copy(myThreePosition);
-    myViewPosition.applyAxisAngle( new THREE.Vector3(0,1,0),xpl.planets[2].rotationAt(xpl.now+timeOffset+sumT));
+    longRotation = ((xpl.now+timeOffset+sumT)%(xpl.planets[2].dayLength/23.9344))*2*Math.PI+0.78539816339;//+0.04363323127;
+
+    myViewPosition.applyAxisAngle( new THREE.Vector3(0,1,0),longRotation);
+
+    //myViewPosition.applyAxisAngle( new THREE.Vector3(0,1,0),xpl.planets[2].rotationAt(xpl.now+timeOffset+sumT));
 
     xpl.batchTLEUpdate(tle_data, timeOffset+sumT);
-    longRotation = ((xpl.now+timeOffset+sumT)%(xpl.planets[2].dayLength/23.9344))*2*Math.PI+0.04363323127;
     earth.rotation.y = longRotation;
     skybox.rotation.x=0;
     //skybox.rotation.set(
@@ -259,7 +262,7 @@ function animate(time) {
         dial._stepsPerRevolution = parseFloat(document.getElementById('timeSelector').value);
     }
 
-    var lightDir= new THREE.Vector3(-1.0,0.0,-0.3);
+    var lightDir= new THREE.Vector3(-1.0,0.3,-0.3);
     lightDir.applyAxisAngle(earthAxis,(Math.PI)-xpl.planets[2].rotationAt(xpl.now+timeOffset+sumT)+0.2);
     requestAnimationFrame( animate );
     
