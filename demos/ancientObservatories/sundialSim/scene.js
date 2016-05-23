@@ -1,11 +1,11 @@
 //Precession means it doesn't work forever. It goes off.
-var obsPos = {latitude:41.895556,longitude:12.496667, elevation: .038} //rome
+var obsPos = {latitude:41.895556,longitude:12.496667, elevation: .038}; //rome
 //var obsPos = {latitude:40.6928,longitude:-73.9903, elevation: 0}//brooklyn
-var modelPath = 'models/Sundials/Ascoli/ObjID73_r3.obj'
+var modelPath = 'models/Sundials/Ascoli/ObjID73_r3.obj';
 //var texturePath = 'models/Sundials/Ascoli/ss_tex.jpg'
-var timeZone = 1
+var timeZone = 1;
 
-var groundTexPath = 'models/Sundials/Ascoli/groundtext.jpg'
+var groundTexPath = 'models/Sundials/Ascoli/groundtext.jpg';
 var container;
 
 var camera, scene, renderer;
@@ -17,24 +17,24 @@ var windowHalfY = window.innerHeight / 2;
 
 var controls;
 
-var speed, timeOffset, date, sumT
-var dial
-var planetArray = []
+var speed, timeOffset, date, sumT;
+var dial;
+var planetArray = [];
 
-var tutStage = 0
+var tutStage = 0;
 
-var line, lineMaterial
+var line, lineMaterial;
 init();
 animate();
 
-var summerPosition = new THREE.Vector3(.05,1.8,-2.019)
-var winterPosition = new THREE.Vector3(.05,0,-.6699)
+var winterPosition = new THREE.Vector3(.05,1.8,-2.019);
+var summerPosition = new THREE.Vector3(.05,0,-.6699);
 
-var showAllLabels = false
-var updateAllLabels = false
-var showLines = false
+var showAllLabels = false;
+var updateAllLabels = false;
+var showLines = false;
 
-var nightWarning = false
+var nightWarning = false;
 
 var isMobile = false;
 function testMobile(){
@@ -51,11 +51,11 @@ testMobile();
 function init() {
 	respond();
 	//console.log('sunrise '+xpl.sunrise(obsPos,-0.833))
-	speed = 0
-	timeOffset = 0
-	sumT = 0
+	speed = 0;
+	timeOffset = 0;
+	sumT = 0;
 
-	var date = xpl.dateFromJday(xpl.now,timeZone)
+	var date = xpl.dateFromJday(xpl.now,timeZone);
 
 	container = document.createElement( 'div' );
 	document.body.appendChild( container );
@@ -78,16 +78,16 @@ function init() {
 	controls.dampingFactor = 0.25;
 	controls.minDistance = 0;
 	controls.minPolarAngle = 0; // radians
-	controls.maxPolarAngle = Math.PI*2
-	controls.maxDistance = 100
-	controls.target = new THREE.Vector3(0,1,-1.5)
+	controls.maxPolarAngle = Math.PI*2;
+	controls.maxDistance = 100;
+	controls.target = new THREE.Vector3(0,1,-1.5);
 
 	 var ambient = new THREE.AmbientLight( 0x292939 );
 	 scene.add( ambient );
 
 	var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
 	 	directionalLight.position.set( 0, 0, -500 );
-	directionalLight.castShadow	= true
+	directionalLight.castShadow	= true;
 
 	directionalLight.shadowCameraRight     =  5;
 	directionalLight.shadowCameraLeft     = -5;
@@ -95,7 +95,7 @@ function init() {
 	directionalLight.shadowCameraBottom   = -5;
 	directionalLight.shadowCameraNear   = 1;
 	directionalLight.shadowCameraFar   = 800;
-	directionalLight.shadowCameraVisible = true
+	directionalLight.shadowCameraVisible = true;
 
 	directionalLight.shadowDarkness = .1;
 	directionalLight.shadowMapWidth = 1024;
@@ -104,37 +104,37 @@ function init() {
 	var loader = new THREE.ImageLoader( manager );
 	loader.load(groundTexPath, function(image){
 			var groundTex = new THREE.Texture();
-			groundTex.image = image
+			groundTex.image = image;
 			groundTex.needsUpdate = true;
 			//var groundGeo = new THREE.BoxGeometry(25,.5,25)
-			var groundGeo = new THREE.PlaneGeometry(25, 25, 1, 1)
+			var groundGeo = new THREE.PlaneGeometry(25, 25, 1, 1);
 			var groundMat = new THREE.MeshLambertMaterial({map: groundTex, /*color:0x307030, side:THREE.DoubleSide*/})
-			var groundMesh = new THREE.Mesh(groundGeo,groundMat)
-			groundMesh.rotateX(-Math.PI/2)
-			groundMesh.position.y=.5
-			groundMesh.castShadow = true
-			groundMesh.receiveShadow = true
-			scene.add(groundMesh)
+			var groundMesh = new THREE.Mesh(groundGeo,groundMat);
+			groundMesh.rotateX(-Math.PI/2);
+			groundMesh.position.y=.5;
+			groundMesh.castShadow = true;
+			groundMesh.receiveShadow = true;
+			scene.add(groundMesh);
 	})
 
 	var gnomonGeo = new THREE.CylinderGeometry( .025, .025, 3, 16 );
 	var gnomonMat = new THREE.MeshBasicMaterial( {color: 0x111111} );
 	gnomonMesh = new THREE.Mesh( gnomonGeo, gnomonMat );
-	gnomonMesh.rotateX(Math.PI/2)
-	gnomonMesh.position.set(0,3.04,-1.48) 
-	gnomonMesh.castShadow = true
+	gnomonMesh.rotateX(Math.PI/2);
+	gnomonMesh.position.set(0,3.04,-1.48) ;
+	gnomonMesh.castShadow = true;
 	scene.add( gnomonMesh );
 
 	//Whole planet creation has to happen in callback function or else sun loads last
 	var sunTexture = new THREE.Texture();
 	loader.load( '../../../../lib/data/images/Sun.jpg', function ( image ) {
 		
-		var groundGridMat = new THREE.LineBasicMaterial({color:0xffffff})
+		var groundGridMat = new THREE.LineBasicMaterial({color:0xffffff});
 		
-		var size = 500
-		var space = 25
+		var size = 500;
+		var space = 25;
 		for(var i = -size+(space/2); i<size;i+=space){
-			var groundGridGeo = new THREE.Geometry()
+			var groundGridGeo = new THREE.Geometry();
 			groundGridGeo.vertices.push(
 				new THREE.Vector3( i, .5, -size ),
 				new THREE.Vector3( i, .5, size )
@@ -154,16 +154,16 @@ function init() {
 		
 		for(var p=0;p<6;p++){
 				var nullObj = new THREE.Object3D();
-				nullObj.name = xpl.planets[p].name
+				nullObj.name = xpl.planets[p].name;
 				if(p!=2){
 					var geometry = new THREE.SphereGeometry( 5,8,8 );
 					var material = new THREE.MeshBasicMaterial( { color: xpl.planets[p].texColor } );
 					var sphere = new THREE.Mesh( geometry, material );
-					sphere.position.set(0,0,-1500)
+					sphere.position.set(0,0,-1500);
 
-					nullObj.add(sphere)
-					var pAltAz = xpl.PlanetAlt(p,xpl.now+timeOffset+sumT,obsPos)
-					nullObj.rotation.set(pAltAz[0]*(Math.PI/180),-pAltAz[1]*(Math.PI/180),0,'YXZ')
+					nullObj.add(sphere);
+					var pAltAz = xpl.PlanetAlt(p,xpl.now+timeOffset+sumT,obsPos);
+					nullObj.rotation.set(pAltAz[0]*(Math.PI/180),-pAltAz[1]*(Math.PI/180),0,'YXZ');
 				}else{
 					
 						sunTexture.image = image;
@@ -174,7 +174,7 @@ function init() {
 						var sunGeometry = new THREE.SphereGeometry( 25,8,8 );
 						var sunMaterial = new THREE.MeshLambertMaterial( { emissiveMap:sunTexture,emissive: 0xffffff, emissiveIntensity:2 } );
 
-						var lineGeometry = new THREE.Geometry()
+						var lineGeometry = new THREE.Geometry();
 						lineMaterial = new THREE.LineBasicMaterial({
 							color: 0xffff00,transparent:true,opacity:.5, needsUpdate:true
 						})
@@ -197,15 +197,15 @@ function init() {
 						line = new THREE.Line( lineGeometry, lineMaterial );
 
 						var sphere = new THREE.Mesh( sunGeometry, sunMaterial );
-						sphere.position.set(0,0,-1500)
+						sphere.position.set(0,0,-1500);
 
-						nullObj.add(sphere)
-						nullObj.add(line)
-						nullObj.add( directionalLight )
+						nullObj.add(sphere);
+						nullObj.add(line);
+						nullObj.add( directionalLight );
 
-						var pAltAz = xpl.PlanetAlt(2,xpl.now+timeOffset+sumT,obsPos)
+						var pAltAz = xpl.PlanetAlt(2,xpl.now+timeOffset+sumT,obsPos);
 
-						nullObj.rotation.set(pAltAz[0]*(Math.PI/180),-pAltAz[1]*(Math.PI/180),0,'YXZ')	
+						nullObj.rotation.set(pAltAz[0]*(Math.PI/180),-pAltAz[1]*(Math.PI/180),0,'YXZ');
 				}					
 			planetArray.push(nullObj)
 			scene.add( nullObj )
@@ -219,14 +219,14 @@ function init() {
 	var manager = new THREE.LoadingManager();
 	manager.onProgress = function ( item, loaded, total ) {
 		if(document.getElementById("loading")){
-			document.getElementById("loading").remove()
+			document.getElementById("loading").remove();
 		}
 		
 		if(document.getElementById("loadAmount")){
-			document.getElementById("loadAmount").remove()
+			document.getElementById("loadAmount").remove();
 		}
 		if(document.getElementById("intro")){
-			document.getElementById("intro").style.visibility='visible'
+			document.getElementById("intro").style.visibility='visible';
 		}
 		
 		console.log( item, loaded, total );
@@ -307,37 +307,6 @@ function animate() {
 		updateLabels("Fall/Spring Equinox",equinoxPosition)
 	}
 
-	// if(showAllLabels){
-	// 	addLabel("Summer Solstice (June 21st)", summerPosition,scene,1)
-	// 	addLabel("Winter Solstice (Dec. 21st)", winterPosition,scene,1)
-	// 	addLabel("Fall/Spring Equinox",equinoxPosition, scene, 1)
-	// 	showAllLabels = false
-	// }
-
-	// if(updateAllLabels){
-	// 	updateLabels("Summer Solstice (June 21st)", summerPosition)
-	// 	updateLabels("Winter Solstice (Dec. 21st)", winterPosition)
-	// 	updateLabels("Fall/Spring Equinox",equinoxPosition)
-	// }
-
-	// if(showLines){
-	// 	for(var p in scene.children){
-	// 		if(scene.children[p].name=="Earth"){
-	// 			scene.children[p].add(line)
-	// 		}
-	// 	}
-	// 	showLines = false
-	// }
-
-	// if(!showLines){
-	// 	for(var p in scene.children){
-	// 		if(scene.children[p].name=="Earth"){
-	// 			scene.children[p].remove(line)
-	// 		}
-	// 	}
-	// }
-		
-
 
 	tutorial()
 
@@ -346,19 +315,6 @@ function animate() {
 	if(typeof dial != 'undefined'){
 		dial._stepsPerRevolution = parseFloat(document.getElementById('timeSelector').value)
 	}
-
-	//DISPLAY DATE vs CALC DATE
-		// var dDay = date.day.toString()
-	// dDay.length<2 ? dDay = "0"+dDay : {}
-
-	// var dMo= date.month.toString()
-	// dMo.length<2 ? dMo = "0"+dMo : {}
-
-		// var dhour = date.hour//.toString()
-	// // dhour.length < 2 ? dhour = "0"+dhour :{}
-	// var dspHour = (dhour+timeZone)
-	// if(dspHour>23){dspHour=0}
-	// if(dspHour<0){dspHour=24+dspHour}
 
 	var date = xpl.dateFromJday(xpl.now+timeOffset+sumT+(timeZone/24))
 
@@ -426,10 +382,6 @@ function addLabel(name, label_position, parent, lScale){
 	canvas.height = 128
 	ctx.font = '12pt Arial';
 	ctx.fontWeight = 'bolder'
-	// ctx.fillStyle = 'white';
-	// ctx.fillRect(0, 0, canvas.width, canvas.height);
-	// ctx.fillStyle = 'black';
-	// ctx.fillRect(5, 5, canvas.width-10, canvas.height-10);
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle="rgba(0, 0, 0, 0)";
     ctx.fill();
@@ -522,6 +474,8 @@ document.getElementById("close").addEventListener("click",function(){
 	document.getElementById("moreInfo").style.visibility = 'visible'
 	document.getElementById("controls").style.visibility = "visible";
 	document.getElementById("date").style.visibility = "visible";
+	document.getElementById("demo").style.visibility = "visible";
+
 	if(!isMobile){
 		document.getElementById("setDate").style.visibility = "visible";
 		document.getElementById("submitDate").style.visibility = "visible";
@@ -581,6 +535,7 @@ document.getElementsByTagName('canvas')[0].addEventListener("click",function(){
 			document.getElementById("setDate").style.visibility = "visible";
 			document.getElementById("submitDate").style.visibility = "visible";
 		}
+		document.getElementById("demo").style.visibility = "visible";
 		document.getElementById("intro").style.bottom = "";	
 		document.getElementById("moreInfo").style.visibility = 'visible'
 		tutStage = 0
@@ -590,20 +545,20 @@ document.getElementsByTagName('canvas')[0].addEventListener("click",function(){
 })
 
 var logValue = function(e){
-        timeOffset = (e.newVal/14400)
+        timeOffset = (e.newVal/14400);
 }
 
-var create = true
-var sphereCut, globeMesh, earthPlaneMesh
-var upOp = true
+var create = true;
+var sphereCut, globeMesh, earthPlaneMesh;
+var upOp = true;
 
 	//var moreInfoHover = document.createElement('style');
     //moreInfoHover.type = 'text/css';
     //moreInfoHover.innerHTML="#moreInfo:hover{font-size: 22px;background:rgba(0,0,0,.8);border:2px solid white;height:150px;width:200px;top:-168px;transition: all .5s ease-in-out;}"
 
 document.getElementById("next").addEventListener("click",function(){
-					++tutStage
-					create = true
+					++tutStage;
+					create = true;
 				})
 
 function tutorial(){
@@ -623,6 +578,7 @@ function tutorial(){
 				document.getElementById("date").style.visibility = "hidden";
 				document.getElementById("setDate").style.visibility = "hidden";
 				document.getElementById("submitDate").style.visibility = "hidden";
+				document.getElementById("demo").style.visibility = "hidden";
 
 				document.getElementById("intro").style.bottom = "0px";
 				document.getElementById("intro").style.transform = "";
@@ -633,9 +589,9 @@ function tutorial(){
 				var sphereCutGeo = new THREE.SphereGeometry(2.2,24,24)
 				var sphereCutMat = new THREE.MeshBasicMaterial( { depthTest: false,color: 0xffffff, wireframe: true, wireframeLinewidth: 1, side: THREE.DoubleSide, transparent: true, opacity:.25} );
 				sphereCut = new THREE.Mesh(sphereCutGeo,sphereCutMat)
-				sphereCut.position.y=3
-				scene.add(sphereCut)
-				create=false
+				sphereCut.position.y=3;
+				scene.add(sphereCut);
+				create=false;
 			}
 		break
 
@@ -699,9 +655,9 @@ function tutorial(){
 						scene.children[p].add(line)
 					}
 				}
-				addEquinoxes = true
-				showEquinoxes = true
-				create = false
+				addEquinoxes = true;
+				showEquinoxes = true;
+				create = false;
 			}
 			
 		break
@@ -732,6 +688,8 @@ function tutorial(){
 				document.getElementById("moreInfo").style.visibility = 'visible';
 				document.getElementById("controls").style.visibility = "visible";
 				document.getElementById("date").style.visibility = "visible";
+				document.getElementById("demo").style.visibility = "visible";
+
 				if(!isMobile){
 					document.getElementById("setDate").style.visibility = "visible";
 					document.getElementById("submitDate").style.visibility = "visible";
@@ -767,11 +725,8 @@ function respond(){
 
 		if(styleSheet.cssRules[0].selectorText=="#moreInfo:hover"){
 			console.log("should remove hover")
-			//if(styleSheet.cssRules){
 	            styleSheet.deleteRule(0);
-	        // } else {
-         //     styleSheet.removeRule(0);
-         //   }
+
 		}
 		document.getElementById("moreInfo").style.top=""
 		document.getElementById("moreInfo").style.left=""
@@ -782,28 +737,12 @@ function respond(){
 		document.getElementById("date").style.fontSize = "15px";
 		document.getElementById("date").style.height = "50px";
 		
-		// document.getElementById("setDate").style.width="150px";
-		// document.getElementById("setDate").style.height="20px";
-		// document.getElementById("setDate").style.fontSize="12px";
-		// document.getElementById("setDate").style.bottom="50px";
-
-		// document.getElementById("submitDate").style.bottom = "1px";
-		// document.getElementById("submitDate").style.width = "160px";
-		// document.getElementById("submitDate").style.height = "30px";
-		// document.getElementById("submitDate").style.fontSize = "10px";
-		// document.getElementById("submitDate").style.left = "2.5px";
 		document.getElementById("submitDate").style.visibility="hidden";
 		document.getElementById("demo").style.visibility="hidden";
 		document.getElementById("setDate").style.visibility="hidden";
-		// document.getElementById("demo").style.left="100%";
-		// document.getElementById("demo").style.transform = "translate(-150%,0%)";
-		
-
-		//document.getElementsByClassName("time")[0].style.left="25%";
 		document.getElementsByClassName("time")[0].style.visibility="hidden";
 		document.getElementsByClassName("arrows")[0].style.visibility = "hidden";
-		//document.getElementsByClassName("arrows")[0].style.left="100%";
-		//document.getElementsByClassName("arrows")[0].style.transform = "translate(-112%,0%)";
+
 		document.getElementsByClassName("time")[0].style.bottom="";
 		document.getElementsByClassName("time")[0].style.fontSize="";
 
