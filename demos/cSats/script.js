@@ -239,7 +239,7 @@ function animate(time) {
     myThreePosition = new THREE.Vector3(myposition.x*0.0156,myposition.z*0.0156,myposition.y*-0.0156);
     myViewPosition=new THREE.Vector3();
     myViewPosition.copy(myThreePosition);
-    longRotation = ((xpl.now+timeOffset+sumT)%(xpl.planets[2].dayLength/23.9344))*2*Math.PI+0.78539816339;//+0.04363323127;
+    longRotation = ((xpl.now+timeOffset+sumT)%(xpl.planets[2].dayLength/23.9344))*2*(Math.PI*1.5)+.2//Why+.2? //.0069//0.78539816339+.6//+0.04363323127;
 
     myViewPosition.applyAxisAngle( new THREE.Vector3(0,1,0),longRotation);
 
@@ -377,15 +377,15 @@ function createSats(){
                                                 }
                 }
 
-                        materialP = new THREE.PointCloudMaterial( { color: 0xaaaaaa, size: 3, sizeAttenuation: false, transparent: true, alpha: 0.5 } );
+                        materialP = new THREE.PointsMaterial( { color: 0xaaaaaa, size: 3, sizeAttenuation: false, transparent: true } );
 				
-                        materialT = new THREE.PointCloudMaterial( { size: 1, sizeAttenuation: false, transparent: true, alpha: 0.5 } );
+                        materialT = new THREE.PointsMaterial( { size: 1, sizeAttenuation: false, transparent: true } );
                         materialT.color.setHSL(0.6,1,0.6); 	
 
-                        particleHead = new THREE.PointCloud( geoP, materialP );
+                        particleHead = new THREE.Points( geoP, materialP );
                         particleHead.sortParticles = true;
 			
-			trailSection = new THREE.PointCloud(geoP,materialT);
+			trailSection = new THREE.Points(geoP,materialT);
 			trailSection.sortParticles = true;		
 			particleTrail.push(trailSection);
 			for(var p in particleTrail){
