@@ -239,7 +239,7 @@ function animate(time) {
     myThreePosition = new THREE.Vector3(myposition.x*0.0156,myposition.z*0.0156,myposition.y*-0.0156);
     myViewPosition=new THREE.Vector3();
     myViewPosition.copy(myThreePosition);
-    longRotation = ((xpl.now+timeOffset+sumT)%(xpl.planets[2].dayLength/23.9344))*2*(Math.PI*1.5)+.2//Why+.2? //.0069//0.78539816339+.6//+0.04363323127;
+    longRotation = ((xpl.now+timeOffset+sumT)%(xpl.planets[2].dayLength/24))*2*(Math.PI*1.5)//+.2//Why+.2? //.0069//0.78539816339+.6//+0.04363323127;
 
     myViewPosition.applyAxisAngle( new THREE.Vector3(0,1,0),longRotation);
 
