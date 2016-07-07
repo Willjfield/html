@@ -32,6 +32,7 @@ var highlightGeo,highlightNROMat,highlightMilMat,highlightUnMat,highlightMesh;
 var rotateGeo = 0;//(xpl.curEarthOblique(xpl.now+timeOffset+sumT))*Math.PI/180
 var longRotation;
 var myLong;
+var currentRotation;
 
 var tourStage = 0;
 
@@ -172,7 +173,9 @@ function init() {
         earth = new THREE.Mesh(earthGeo,earthMaterial);
         
         scene.add(earth);
-        lightDir.applyAxisAngle(earthAxis,(Math.PI)-xpl.planets[2].rotationAt(xpl.now+timeOffset)+0.2);
+        currentRotation = Math.PI-xpl.planets[2].rotationAt(xpl.now+timeOffset)+0.2;
+        console.log(currentRotation)
+        lightDir.applyAxisAngle(earthAxis,currentRotation);
         //Change Y-Axis of light depending on time of year
         //lightDir.applyAxisAngle(earthAxis,(Math.PI)-xpl.planets[2].rotationAt(xpl.now+timeOffset)+.2)
 
@@ -239,7 +242,7 @@ function animate(time) {
     myThreePosition = new THREE.Vector3(myposition.x*0.0156,myposition.z*0.0156,myposition.y*-0.0156);
     myViewPosition=new THREE.Vector3();
     myViewPosition.copy(myThreePosition);
-    longRotation = ((xpl.now+timeOffset+sumT)%(xpl.planets[2].dayLength/24))*2*(Math.PI*1.5)//+.2//Why+.2? //.0069//0.78539816339+.6//+0.04363323127;
+    longRotation = ((xpl.now+timeOffset+sumT+.25)%(xpl.planets[2].dayLength/23.9333))*(2*Math.PI)//*(Math.PI*1.5)//+.2//Why+.2? //.0069//0.78539816339+.6//+0.04363323127;
 
     myViewPosition.applyAxisAngle( new THREE.Vector3(0,1,0),longRotation);
 
@@ -263,7 +266,10 @@ function animate(time) {
     }
 
     var lightDir= new THREE.Vector3(-1.0,0.3,-0.3);
-    lightDir.applyAxisAngle(earthAxis,(Math.PI)-xpl.planets[2].rotationAt(xpl.now+timeOffset+sumT)+0.2);
+    currentRotation = ((xpl.now+timeOffset+sumT+.5)%(xpl.planets[2].dayLength/23.9333))*(-2*Math.PI)//(Math.PI-xpl.planets[2].rotationAt(xpl.now+timeOffset+sumT)+0.2);
+
+    lightDir.applyAxisAngle(earthAxis,currentRotation);
+    console.log(currentRotation);
     requestAnimationFrame( animate );
     
     xpl.batchTLEUpdate(tle_data, timeOffset+sumT);
