@@ -242,7 +242,8 @@ function animate(time) {
     myThreePosition = new THREE.Vector3(myposition.x*0.0156,myposition.z*0.0156,myposition.y*-0.0156);
     myViewPosition=new THREE.Vector3();
     myViewPosition.copy(myThreePosition);
-    longRotation = ((xpl.now+timeOffset+sumT+.25)%(xpl.planets[2].dayLength/23.93331))*(2*Math.PI)//*(Math.PI*1.5)//+.2//Why+.2? //.0069//0.78539816339+.6//+0.04363323127;
+    var changeThisForOffset = .5;
+    longRotation = ((xpl.now+timeOffset+sumT+changeThisForOffset)%(xpl.planets[2].dayLength/23.93331))*(2*Math.PI)//*(Math.PI*1.5)//+.2//Why+.2? //.0069//0.78539816339+.6//+0.04363323127;
 
     myViewPosition.applyAxisAngle( new THREE.Vector3(0,1,0),longRotation);
 
@@ -267,9 +268,8 @@ function animate(time) {
 
     var lightDir= new THREE.Vector3(-1.0,0.3,-0.3);
     currentRotation = ((xpl.now+timeOffset+sumT+.5)%(xpl.planets[2].dayLength/23.93331))*(-2*Math.PI)//(Math.PI-xpl.planets[2].rotationAt(xpl.now+timeOffset+sumT)+0.2);
-
     lightDir.applyAxisAngle(earthAxis,currentRotation);
-    console.log(currentRotation);
+    //console.log(currentRotation);
     requestAnimationFrame( animate );
     
     xpl.batchTLEUpdate(tle_data, timeOffset+sumT);
