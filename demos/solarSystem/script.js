@@ -366,7 +366,7 @@ var render = function () {
 		var curPosition = xpl.SolarSystem(xpl.planets[p],xpl.now+t+sumT);
 		//launch of voyager 1
         //var curPosition = xpl.SolarSystem(xpl.planets[p],2443391.500000+t);
-		var curRotation = xpl.planets[p].rotationAt(xpl.now+t+sumT)//+Math.PI
+		var curRotation = xpl.planets[p].rotationAt(xpl.now+t+sumT)+(((xpl.now+t+sumT)%365.25)*Math.PI*2)+Math.PI;
 		var oblique = 0
 		drawPlanets[p].rotation.y = curRotation
 		drawPlanets[p].position.set(-curPosition[0]*solScale,curPosition[2]*solScale,curPosition[1]*solScale)
@@ -375,19 +375,53 @@ var render = function () {
 
 	if(document.getElementById("moveWithPlanet").checked){
 		var dist
-		focusedPlanet>3 ? dist = .004 : dist = .0005
+		focusedPlanet>3 ? dist = .004 : dist = .0001
 		document.getElementById("movewcam").style.color = "red"
 		document.getElementById("movewcam").style.fontWeight='900'
-		if(focusedPlanet<9){
-			if(camera.position.distanceTo(drawPlanets[focusedPlanet].position)>dist){
-				controls.dollyIn(1.1)
-			}
+		/*if(focusedPlanet<9){
+			//if(camera.position.distanceTo(drawPlanets[focusedPlanet].position)>dist){
+				camera.position.x = drawPlanets[focusedPlanet].position.x;
+				camera.position.y = drawPlanets[focusedPlanet].position.y;
+
+				camera.position.z = drawPlanets[focusedPlanet].position.z+.0001;
+				//controls.dollyIn(100)
+			//}
 		}else if(focusedPlanet==9){
 			dist = .01
-			if(camera.position.distanceTo(new THREE.Vector3())>dist){
-				controls.dollyIn(1.1)
-			}
+				camera.position.x = drawPlanets[focusedPlanet].position.x;
+				camera.position.y = drawPlanets[focusedPlanet].position.y;
+
+				camera.position.z = drawPlanets[focusedPlanet].position.z+.0001;
 		}else{
+			switch(focusedPlanet){
+				case 10:
+				 if(camera.position.distanceTo(curV1Position)>dist){
+					controls.dollyIn(1.1)
+				 }	
+				break
+				case 11:
+				if(camera.position.distanceTo(curV2Position)>dist){
+					controls.dollyIn(1.1)
+				 }	
+				break
+				case 12:
+				if(camera.position.distanceTo(curDawnPosition)>dist){
+					controls.dollyIn(1.1)
+				 }	
+				break
+			}
+		}
+		*/
+		if(focusedPlanet<9){
+
+				camera.position.x = drawPlanets[focusedPlanet].position.x;
+				camera.position.y = drawPlanets[focusedPlanet].position.y;
+
+				camera.position.z = drawPlanets[focusedPlanet].position.z+dist;
+		}else if(focusedPlanet == 9){
+			camera.position.set(0,0,.01);
+		}
+		else{
 			switch(focusedPlanet){
 				case 10:
 				 if(camera.position.distanceTo(curV1Position)>dist){
@@ -419,7 +453,7 @@ var voyager1Positions = []
 xpl.probePositions('voyager1',voyager1Positions,function(){
 	var probeGeometry = new THREE.Geometry();
 		probeGeometry.verticesNeedUpdate = true
-	for(var v in voyager1Positions){
+	for(var v=0;v<voyager1Positions.length;v+=10){
 		probeGeometry.vertices.push(
 			new THREE.Vector3( -voyager1Positions[v].x, voyager1Positions[v].y, voyager1Positions[v].z )
 		);
@@ -468,7 +502,7 @@ var voyager2Positions = []
 xpl.probePositions('voyager2',voyager2Positions,function(){
 	var probeGeometry = new THREE.Geometry();
 		probeGeometry.verticesNeedUpdate = true
-	for(var v in voyager2Positions){
+	for(var v=0;v<voyager2Positions.length;v+=10){
 		probeGeometry.vertices.push(
 			new THREE.Vector3( -voyager2Positions[v].x, voyager2Positions[v].y, voyager2Positions[v].z )
 		);
@@ -514,7 +548,7 @@ var dawnPositions = []
 xpl.probePositions('dawn',dawnPositions,function(){
 	var probeGeometry = new THREE.Geometry();
 		probeGeometry.verticesNeedUpdate = true
-	for(var v in dawnPositions){
+	for(var v=0;v<dawnPositions.length;v+=10){
 		probeGeometry.vertices.push(
 			new THREE.Vector3( -dawnPositions[v].x, dawnPositions[v].y, dawnPositions[v].z )
 		);

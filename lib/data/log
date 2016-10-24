@@ -1,11 +1,11 @@
---2016-04-30 12:35:30--  https://www.space-track.org/ajaxauth/login
+--2016-10-23 17:29:33--  https://www.space-track.org/ajaxauth/login
 Resolving www.space-track.org (www.space-track.org)... 207.178.144.234
 Connecting to www.space-track.org (www.space-track.org)|207.178.144.234|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 2 [application/json]
-Saving to: ‘login.3’
+Saving to: ‘login.16’
 
-     0K                                                       100% 76.7K=0s
+     0K                                                       100%  130K=0s
 
-2016-04-30 12:35:32 (76.7 KB/s) - ‘login.3’ saved [2/2]
+2016-10-23 17:29:34 (130 KB/s) - ‘login.16’ saved [2/2]
 
