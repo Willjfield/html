@@ -366,7 +366,7 @@ var render = function () {
 		var curPosition = xpl.SolarSystem(xpl.planets[p],xpl.now+t+sumT);
 		//launch of voyager 1
         //var curPosition = xpl.SolarSystem(xpl.planets[p],2443391.500000+t);
-		var curRotation = xpl.planets[p].rotationAt(xpl.now+t+sumT)+(((xpl.now+t+sumT)%365.25)*Math.PI*2)+Math.PI;
+		var curRotation = xpl.planets[p].rotationAt(xpl.now+t+sumT)+(((xpl.now+t+sumT)%365.25)/365.25)//*Math.PI*2)+Math.PI;
 		var oblique = 0
 		drawPlanets[p].rotation.y = curRotation
 		drawPlanets[p].position.set(-curPosition[0]*solScale,curPosition[2]*solScale,curPosition[1]*solScale)
